@@ -4,21 +4,21 @@ import React from "react";
 export default function Publish() {
     return (
         <View>
-            <PublishHeader/>
+            <PublishBody/>
         </View>
     );
 }
 
-function PublishHeader() {
+function PublishBody() {
     return (
-        <View style={styles.header}>
-            <Text> Anunciar </Text>
+        <View style={styles.container}>
+            <Text> Content </Text>
         </View>
     );
 }
 
 const styles = StyleSheet.create({
-    header: {
-        backgroundColor: 'blue',
+    container: {
+        fontSize: 20
     }
 });
