@@ -9,11 +9,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 
-import Home from './component/Home';
-import Profile from './component/Profile';
-import Publish from './component/Publish';
-import Chat from './component/Chat';
-import Settings from './component/Settings';
+import { Home, Profile, Publish, Chat, Settings } from './screens';
 
 const Tab = createBottomTabNavigator();
 
