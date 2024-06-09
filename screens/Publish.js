@@ -1,15 +1,55 @@
 import React, {useState} from "react";
 import { useForm, Controller } from "react-hook-form";
-import { View, Text, TextInput, StyleSheet, Button, SafeAreaView } from "react-native";
+import { View, Text, TextInput, StyleSheet, Button, SafeAreaView, Image } from "react-native";
+
+import * as ImagePicker from 'expo-image-picker';
 
 export default function Publish() {
     return (
-        <View style={styles.container}>
-            <Text> Content </Text>
-            <Form/>
+        <>
+            <ImageContainer/>
+            <Form></Form>
+        </>
+    );
+}
+
+function ImageContainer() {
+    const [ image, setImage ] = useState(null);
+
+    const pickImage = async() => {
+        let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
+            allowsEditing: true,
+            aspect: [4, 4],
+            quality: 1
+        });
+
+        console.log(result);
+
+        if (!result.canceled) {
+            setImage(result.assets[0].uri);
+        };
+    };
+
+    return (
+        <View style={imageStyle.container}>
+            { image && <Image source={{ uri: image }} style={imageStyle.image} /> }
+            <Button title='Select image from camera roll' onPress={pickImage} />
         </View>
     );
 }
+
+const imageStyle = StyleSheet.create({
+    container: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    image: {
+        width: 200,
+        height: 200
+    }
+});
 
 function Form() {
     const { control, handleSubmit, formState: { errors } } = useForm();
@@ -22,28 +62,28 @@ function Form() {
 
     return (
         <SafeAreaView>
-            <View style={styles.formContainer}>
+            <View style={formStyle.container}>
 
                 <Controller
                     control={control}
                     render={({ field }) => {
                         <TextInput
                             {...field}
-                            style={styles.formInput}
+                            style={formStyle.input}
                             placeholder="Your Name"
                         />
                     }}
                     name='name'
                     rules={{ required: 'You must enter your name' }}
                 />
-                {errors.name && <Text style={styles.errorText}> {errors.name.message} </Text>}
+                {errors.name && <Text style={formStyle.errorText}> {errors.name.message} </Text>}
 
                 <Controller
                     control={control}
                     render={({ field }) => {
                         <TextInput
                             {...field}
-                            style={styles.formInput}
+                            style={formStyle.input}
                             placeholder="Email"
                         />
                     }}
@@ -53,7 +93,7 @@ function Form() {
                         pattern: { value: /^\S+@\S+$/i, message: 'Enter a valid email address'}
                     }}
                 />
-                {errors.email && <Text style={styles.errorText}> {errors.email.message} </Text>}
+                {errors.email && <Text style={formStyle.errorText}> {errors.email.message} </Text>}
 
                 <Button title='submit' onPress={handleSubmit(onSubmit)} />
 
@@ -70,14 +110,11 @@ function Form() {
     );
 };
 
-const styles = StyleSheet.create({
+const formStyle = StyleSheet.create({
     container: {
-        fontSize: 20
-    },
-    formContainer: {
         padding: 16
     },
-    formInput: {
+    input: {
         height: 40,
         borderColor: 'gray',
         borderWidth: 1,
@@ -87,5 +124,10 @@ const styles = StyleSheet.create({
     errorText: {
         color: 'red',
         marginBottom: 10
+    }
+});
+
+const main = StyleSheet.create({
+    container: {
     }
 });
