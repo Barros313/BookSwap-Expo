@@ -1,8 +1,12 @@
 import React, {useState} from "react";
 import { useForm, Controller } from "react-hook-form";
-import { View, Text, TextInput, StyleSheet, Button, SafeAreaView, Image } from "react-native";
+import { View, Text, TextInput, StyleSheet, SafeAreaView, Image, Pressable, TouchableOpacity, Button } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 
 import * as ImagePicker from 'expo-image-picker';
+
+import { CameraView, useCameraPermissions } from "expo-camera";
+
 
 export default function Publish() {
     return (
@@ -31,10 +35,48 @@ function ImageContainer() {
         };
     };
 
+    const [ facing, setFacing ] = useState('back');
+    const [ permission, requestPermission ] = useCameraPermissions();
+
+    if (!permission) {
+        return <View />;
+    };
+
+    if (!permission.granted) {
+        return (
+            <View style={cameraStyle.container}>
+                <Text style={{ textAlign: 'center' }}> We need your permission to show the camera </Text>
+                <Button onPress={requestPermission} title="grant permission" />
+            </View>
+        );
+    };
+
+    function toggleCameraFacing() {
+        setFacing(current => (current === 'back' ? 'front' : 'back'));
+    }
+
     return (
         <View style={imageStyle.container}>
             { image && <Image source={{ uri: image }} style={imageStyle.image} /> }
-            <Button title='Select image from camera roll' onPress={pickImage} />
+
+            <Pressable onPress={pickImage}>
+                <Ionicons name="images-sharp" size={20} />
+                <Text> Selecionar foto </Text>
+            </Pressable>
+
+            <CameraView style={cameraStyle.camera} facing={facing}>
+                <View style={cameraStyle.buttonContainer}>
+                <TouchableOpacity style={cameraStyle.button} onPress={toggleCameraFacing}>
+                    <Text style={cameraStyle.text}>Flip Camera</Text>
+                </TouchableOpacity>
+                </View>
+            </CameraView>
+
+            {/* <Pressable>
+                <Ionicons  name='camera-sharp' size={20} />
+                <Text> Tirar foto </Text>
+            </Pressable> */}
+
         </View>
     );
 }
@@ -48,6 +90,32 @@ const imageStyle = StyleSheet.create({
     image: {
         width: 200,
         height: 200
+    }
+});
+
+const cameraStyle = StyleSheet.create({
+    container: {
+        flex: 1,
+        justifyContent: 'center'
+    },
+    camera: {
+        flex: 1
+    },
+    buttonContainer: {
+        flex: 1,
+        flexDirection: 'row',
+        backgroundColor: 'transparent',
+        margin: 64
+    },
+    button: {
+        flex: 1,
+        alignSelf: 'flex-end',
+        alignItems: 'center'
+    },
+    text: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        color: 'white'
     }
 });
 
