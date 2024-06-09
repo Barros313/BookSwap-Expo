@@ -60,9 +60,7 @@ export default function App() {
               <Ionicons name='add-circle-outline' size={size} color={color}/>
             ),
             headerStyle: styles.tabHeader,
-            headerTitleStyle: {
-              fontFamily: 'Kavoon-Regular'
-            }
+            headerTitleStyle: styles.tabHeaderTitle
             }
           }
           />
@@ -110,6 +108,9 @@ const styles = StyleSheet.create({
     flex: 1,
     marginTop: Constants.statusBarHeight,
   }, tabHeader: {
-    backgroundColor: 'blue'
+    backgroundColor: '#3498DB',
+  }, tabHeaderTitle: {
+    fontFamily: 'Kavoon-Regular',
+    color: '#000000'
   }
 });
