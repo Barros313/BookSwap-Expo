@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import Constants from 'expo-constants';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -37,7 +37,7 @@ export default function App() {
 
 
   return (
-    <View style={styles.container}>
+    <View style={styles.container} onLayout={onLayoutRootView}>
       <StatusBar style="auto" />
 
       <NavigationContainer>
