@@ -1,6 +1,7 @@
 import React, {useState} from "react";
-import { View, Text, StyleSheet, Image, Pressable } from "react-native";
+import { View, Text, TextInput, Button, ScrollView, StyleSheet, Image, Pressable } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+
 
 import * as ImagePicker from 'expo-image-picker';
 
