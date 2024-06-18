@@ -9,9 +9,16 @@ export default function Publish() {
     return (
         <>
             <ImageContainer />
+            <BookForm />
         </>
     );
 }
+
+const BookForm = () => {
+    return (
+        <></>
+    );
+};
 
 function ImageContainer() {
     const [ image, setImage ] = useState(null);
