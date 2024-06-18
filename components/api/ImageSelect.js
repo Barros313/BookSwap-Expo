@@ -19,7 +19,7 @@ const ImageSelect = () => {
 
       if (!result.canceled) {
           setImage(result.assets[0].uri);
-      };
+      }
   };
 
   return (
