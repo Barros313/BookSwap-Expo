@@ -2,16 +2,24 @@ import React, { useState } from 'react';
 import { View, TextInput, Button } from 'react-native';
 import axios from 'axios';
 
-export default function Login({ navigation }) {
+import {useNavigation} from "@react-navigation/native";
+
+export default function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
+
+    const navigation = useNavigation();
 
     const handleLogin = async () => {
         try {
-            const response = await axios.post("http://localhost:5000/api/auth/login", {
+            const response = await axios.post("http://192.168.1.26:5000/api/auth/login", {
                 email, password
             });
-            alert(`Welcome ${response.data.message}`);
+            alert(response.data);
+
+            navigation.navigate('Home');
+
         } catch (error) {
             alert('Erro ao login');
         }
