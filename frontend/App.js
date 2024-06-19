@@ -17,7 +17,7 @@ import Register from "./components/authentication/Register";
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
-SplashScreen.preventAutoHideAsync();
+// SplashScreen.preventAutoHideAsync();
 
 export default function App() {
   const [fontsLoaded, fontError] = useFonts({
@@ -119,9 +119,16 @@ export default function App() {
           </Tab.Navigator>
         ) : (
             <Stack.Navigator initialRouteName="Login" >
+              <Stack.Screen
+                  name="Login"
+                  component={Login}
+                  initialParams={{ onLoginSuccess: () => setIsAuthenticated(true) }}
+              />
               <Stack.Screen name="Cadastrar" component={Register} />
-              <Stack.Screen name="Login" component={Login} />
-              <Stack.Screen name="Home" component={Home} />
+
+{/*              <Stack.Screen name="Login" component={Login}>
+                { props => <Login {...props} onLoginSuccess={() => setIsAuthenticated(true)} />}
+              </Stack.Screen>*/}
             </Stack.Navigator>
         ) }
 
