@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, TextInput, FlatList, ScrollView } from 'react-native';
+import { Icon } from 'react-native-elements'; // Importando o ícone
 
 // Dados de exemplo para os contatos
 const contactsData = [
@@ -67,22 +68,26 @@ const ChatWindow: React.FC = () => {
   // Componente para renderizar a lista de contatos
   const ContactsList: React.FC = () => {
     return (
-      <FlatList
-        data={contactsData}
-        keyExtractor={(item) => item.id.toString()}
-        renderItem={({ item }) => (
-          <TouchableOpacity onPress={() => changeChat(item.id)}>
-            <View style={{ padding: 20, borderBottomWidth: 1, borderBottomColor: '#66ADDD' }}>
-              <Text style={{ fontSize: 18 }}>{item.name}</Text>
-            </View>
+      <View style={{ flex: 1 }}>
+        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: 20, backgroundColor: '#007BFF' }}>
+          <TouchableOpacity onPress={() => { /* Função de volta será adicionada aqui mais tarde */ }}>
+            <Icon name="arrow-back" color="#FFFFFF" />
           </TouchableOpacity>
-        )}
-        ListHeaderComponent={ // Componente que aparece antes da lista de contatos
-          <View style={{ backgroundColor: '#007BFF', paddingVertical: 30, alignItems: 'center' }}>
-            <Text style={{ color: '#000', fontSize: 24, fontWeight: 'bold' }}>Mensagens</Text>
-          </View>
-        }
-      />
+          <Text style={{ color: '#FFFFFF', fontSize: 24, fontWeight: 'bold' }}>Mensagens</Text>
+          <View style={{ width: 40 }} />
+        </View>
+        <FlatList
+          data={contactsData}
+          keyExtractor={(item) => item.id.toString()}
+          renderItem={({ item }) => (
+            <TouchableOpacity onPress={() => changeChat(item.id)}>
+              <View style={{ padding: 20, borderBottomWidth: 1, borderBottomColor: '#66ADDD' }}>
+                <Text style={{ fontSize: 18 }}>{item.name}</Text>
+              </View>
+            </TouchableOpacity>
+          )}
+        />
+      </View>
     );
   };
 
@@ -108,3 +113,4 @@ const ChatWindow: React.FC = () => {
 };
 
 export default ChatWindow;
+
