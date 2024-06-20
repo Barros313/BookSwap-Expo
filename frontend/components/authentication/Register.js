@@ -9,7 +9,7 @@ export default function Register({ navigation }) {
 
     const handleRegister = async () => {
         try {
-            const response = await axios.post("http://192.168.0.151:5000/api/auth/register", {
+            const response = await axios.post(`${process.env.EXPO_PUBLIC_BACKEND_AUTH_CONNECTION}/api/auth/register`, {
                 username, email, password
             });
             alert(response.data.message);

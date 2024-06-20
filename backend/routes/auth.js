@@ -7,14 +7,14 @@ const router = express.Router();
 const secretKey = 'your_secret_key';
 
 router.post('/register', async (req, res) => {
-  const { username, email, password } = req.body;
+  const { username, email, password, profilePicture } = req.body;
 
   try {
       const existingUser = await User.findOne({ email });
       if (existingUser) return res.status(401).json({ message: 'User already exists' });
 
       const hashedPassword = await bcrypt.hash(password, 10);
-      const newUser = new User({ username, email, password: hashedPassword });
+      const newUser = new User({ username, email, password: hashedPassword, profilePicture });
 
       await newUser.save();
       return res.status(200).json({ message: 'User registered successfully' });

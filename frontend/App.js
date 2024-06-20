@@ -100,9 +100,12 @@ export default function App() {
             name="Profile"
             component={Profile}
             options={{
+              title: "Perfil",
               tabBarIcon:({color, size})=>(
                 <Ionicons name='person-circle-outline' size={size} color={color}/>
-              )
+              ),
+              headerStyle: styles.tabHeader,
+              headerTitleStyle: styles.tabHeaderTitle
             }}
             />
 

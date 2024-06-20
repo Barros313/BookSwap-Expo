@@ -12,7 +12,7 @@ export default function Profile() {
     useEffect(() => {
         const fetchUserData = async () => {
             try {
-                const response = await axios.get(`http://192.168.0.151:5000/api/auth/me?id=${userId}`);
+                const response = await axios.get(`${process.env.EXPO_PUBLIC_BACKEND_AUTH_CONNECTION}/api/auth/me?id=${userId}`);
                 setUser(response.data)
             } catch (error) {
                 console.error('Error fetching data: ', error);
@@ -35,11 +35,16 @@ export default function Profile() {
 
     return (
         <View style={styles.container} >
-            <Image style={styles.profilePicture} source={require('../assets/default-user-image-temp.jpg')} />
+            <Image style={styles.profilePicture} source={{ uri: 'https://i.ibb.co/sK8cBMS/default-user-image-temp.jpg' }} />
 
-            {/*<Text style={styles.label}> id: {userData.id} </Text>*/}
-            <Text style={styles.label}> Username: {user.username} </Text>
-            <Text style={styles.label}> Email: {user.email} </Text>
+            <View style={styles.infoContainer}>
+                <Text style={styles.label}>Username:</Text>
+                <Text style={styles.value}>{user.username}</Text>
+            </View>
+            <View style={styles.infoContainer}>
+                <Text style={styles.label}>Email:</Text>
+                <Text style={styles.value}>{user.email}</Text>
+            </View>
 
         </View>
     );
@@ -50,15 +55,35 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        padding: 16
+        padding: 20,
+        backgroundColor: '#f0f4f7',
+    },
+    loadingText: {
+        fontSize: 20,
+        color: '#333',
+    },
+    profilePicture: {
+        width: 200,
+        height: 200,
+        borderRadius: 100,
+        borderWidth: 2,
+        borderColor: '#ccc',
+        marginBottom: 20,
+    },
+    infoContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginBottom: 10,
+        width: '80%',
     },
     label: {
         fontSize: 18,
-        marginBottom: 12
+        fontWeight: 'bold',
+        color: '#555',
+        marginRight: 10,
     },
-    profilePicture: {
-        borderRadius: 5,
-        width: 100,
-        height: 100,
+    value: {
+        fontSize: 18,
+        color: '#777',
     }
 });
