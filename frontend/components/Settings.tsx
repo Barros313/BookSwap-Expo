@@ -17,6 +17,11 @@ const SettingsScreen: React.FC = () => {
   return (
     <View style={styles.container}>
       <Header
+        leftComponent={
+          <TouchableOpacity onPress={() => {}}>
+            <Icon name="arrow-back" color="#FFFFFF" />
+          </TouchableOpacity>
+        }
         centerComponent={{ text: 'Configurações', style: styles.headerTitle }}
         containerStyle={styles.header}
       />
@@ -95,3 +100,4 @@ const getStyles = (isDarkMode: boolean) => StyleSheet.create({
 });
 
 export default SettingsScreen;
+
