@@ -49,4 +49,13 @@ router.get('/users', async (req, res) => {
     }
 });
 
+router.get('/me', async (req, res) => {
+    try {
+        const user = await User.findById(req.user.id).select('-password');
+        res.json(user);
+    } catch(error) {
+        res.status(500).send(`Server error: ${error}`);
+    }
+});
+
 module.exports = router;
