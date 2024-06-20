@@ -124,11 +124,7 @@ export default function App() {
                   component={Login}
                   initialParams={{ onLoginSuccess: () => setIsAuthenticated(true) }}
               />
-              <Stack.Screen name="Cadastrar" component={Register} />
-
-{/*              <Stack.Screen name="Login" component={Login}>
-                { props => <Login {...props} onLoginSuccess={() => setIsAuthenticated(true)} />}
-              </Stack.Screen>*/}
+              <Stack.Screen name="Register" component={Register} />
             </Stack.Navigator>
         ) }
 
