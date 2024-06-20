@@ -9,7 +9,7 @@ export default function Register({ navigation }) {
 
     const handleRegister = async () => {
         try {
-            const response = await axios.post("http://192.168.1.26:5000/api/auth/register", {
+            const response = await axios.post("http://192.168.0.151:5000/api/auth/register", {
                 username, email, password
             });
             alert(response.data.message);
@@ -25,6 +25,9 @@ export default function Register({ navigation }) {
             <TextInput placeholder="Email" onChangeText={setEmail} value={email} />
             <TextInput placeholder="Senha" onChangeText={setPassword} value={password} secureTextEntry />
             <Button title="Cadastrar" onPress={handleRegister} />
+
+            <Button title="Já possui uma conta? Faça login" onPress={() => navigation.navigate("Login")} />
+
         </View>
     );
 }
