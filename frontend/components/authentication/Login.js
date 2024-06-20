@@ -1,22 +1,25 @@
-import React, { useState } from 'react';
+import React, {useContext, useState} from 'react';
 import { View, TextInput, Button } from 'react-native';
 import axios from 'axios';
+import {UserContext} from "./UserContext";
 
 export default function Login({ route, navigation }) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const { setUserId } = useContext(UserContext);
 
     const handleLogin = async () => {
         try {
-            const response = await axios.post("http://192.168.0.151:5000/api/auth/login", {
+            const response = await axios.post(`${process.env.EXPO_PUBLIC_BACKEND_AUTH_CONNECTION}/api/auth/login`, {
                 email, password
             });
-            alert(response.data);
+            // alert(response.data.user.id);
 
+            setUserId(response.data.user.id);
             route.params.onLoginSuccess();
 
         } catch (error) {
-            alert('Erro ao login');
+            alert(`Erro ao login ${error}`);
         }
     };
 

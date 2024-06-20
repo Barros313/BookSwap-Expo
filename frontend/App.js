@@ -13,11 +13,10 @@ import * as SplashScreen from 'expo-splash-screen';
 import { Home, Profile, Publish, Chat, Settings } from './components';
 import Login from './components/authentication/Login';
 import Register from "./components/authentication/Register";
+import { UserProvider } from "./components/authentication/UserContext";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
-
-// SplashScreen.preventAutoHideAsync();
 
 export default function App() {
   const [fontsLoaded, fontError] = useFonts({
@@ -57,6 +56,7 @@ export default function App() {
       <StatusBar style="auto" />
 
       <NavigationContainer>
+        <UserProvider>
 
         { isAuthenticated ? (
           <Tab.Navigator>
@@ -100,9 +100,12 @@ export default function App() {
             name="Profile"
             component={Profile}
             options={{
+              title: "Perfil",
               tabBarIcon:({color, size})=>(
                 <Ionicons name='person-circle-outline' size={size} color={color}/>
-              )
+              ),
+              headerStyle: styles.tabHeader,
+              headerTitleStyle: styles.tabHeaderTitle
             }}
             />
 
@@ -122,11 +125,12 @@ export default function App() {
               <Stack.Screen
                   name="Login"
                   component={Login}
-                  initialParams={{ onLoginSuccess: () => setIsAuthenticated(true) }}
+                  initialParams={{ onLoginSuccess: () => setIsAuthenticated(true)}}
               />
               <Stack.Screen name="Register" component={Register} />
             </Stack.Navigator>
         ) }
+        </UserProvider>
 
 
       </NavigationContainer>

@@ -7,14 +7,14 @@ const router = express.Router();
 const secretKey = 'your_secret_key';
 
 router.post('/register', async (req, res) => {
-  const { username, email, password } = req.body;
+  const { username, email, password, profilePicture } = req.body;
 
   try {
       const existingUser = await User.findOne({ email });
       if (existingUser) return res.status(401).json({ message: 'User already exists' });
 
       const hashedPassword = await bcrypt.hash(password, 10);
-      const newUser = new User({ username, email, password: hashedPassword });
+      const newUser = new User({ username, email, password: hashedPassword, profilePicture });
 
       await newUser.save();
       return res.status(200).json({ message: 'User registered successfully' });
@@ -48,5 +48,43 @@ router.get('/users', async (req, res) => {
         res.status(500).json({ message: `Server error: ${error}` });
     }
 });
+
+router.get('/me', async (req, res) => {
+    try {
+        const userId = req.query.id;
+
+        if (!userId) {
+            return res.status(400).json({ msg: 'User ID is required' });
+        }
+
+        const user = await User.findById(userId).select('-password');
+
+        if (!user) {
+            return res.status(404).json({ msg: 'User not found' });
+        }
+
+        res.json(user);
+
+    } catch(error) {
+        res.status(500).send(`Server error: ${error}`);
+    }
+});
+
+router.put('/change-profile-photo', async (req, res) => {
+    const { userId, profilePicture } = req.body;
+
+    try {
+        const user = await User.findById(userId);
+        if (!user) return res.status(404).json({ message: 'User not found' });
+
+        user.profilePicture = profilePicture;
+        await user.save();
+
+        res.status(200).json({ message: 'Profile picture updated successfully' });
+    } catch (error) {
+        res.status(500).json({ message: 'Server error' });
+    }
+});
+
 
 module.exports = router;
