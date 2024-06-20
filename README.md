@@ -1,5 +1,11 @@
 # BookSwap - React Native
 
+## Integrantes do Grupo
+* Giovanni Santos
+* Gabriel Barros
+* Hugo Vasconcelos
+* Douglas Oliveira
+
 ## Configurando ambiente
 
 ### Abrindo terminais
