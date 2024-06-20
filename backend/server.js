@@ -17,4 +17,7 @@ mongoose.connect(process.env.MONGODB_URI, {useNewUrlParser: true, useUnifiedTopo
 const authRoutes = require('./routes/auth');
 app.use('/api/auth', authRoutes);
 
+const publishRoutes = require('./routes/publish');
+app.use('/api/publish', publishRoutes);
+
 app.listen(PORT, () => console.log(`Server started on port: ${PORT}`));

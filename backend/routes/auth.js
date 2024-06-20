@@ -70,4 +70,21 @@ router.get('/me', async (req, res) => {
     }
 });
 
+router.put('/change-profile-photo', async (req, res) => {
+    const { userId, profilePicture } = req.body;
+
+    try {
+        const user = await User.findById(userId);
+        if (!user) return res.status(404).json({ message: 'User not found' });
+
+        user.profilePicture = profilePicture;
+        await user.save();
+
+        res.status(200).json({ message: 'Profile picture updated successfully' });
+    } catch (error) {
+        res.status(500).json({ message: 'Server error' });
+    }
+});
+
+
 module.exports = router;
