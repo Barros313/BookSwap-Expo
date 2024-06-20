@@ -1,19 +1,21 @@
-import React, { useState } from 'react';
+import React, {useContext, useState} from 'react';
 import { View, TextInput, Button } from 'react-native';
 import axios from 'axios';
+import {UserContext} from "./UserContext";
 
 export default function Login({ route, navigation }) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [user, setUser] = useState(null);
+    const { setUserId } = useContext(UserContext);
 
     const handleLogin = async () => {
         try {
             const response = await axios.post(`${process.env.EXPO_PUBLIC_BACKEND_AUTH_CONNECTION}/api/auth/login`, {
                 email, password
             });
-            alert(response.data.user.id);
+            // alert(response.data.user.id);
 
+            setUserId(response.data.user.id);
             route.params.onLoginSuccess();
 
         } catch (error) {
