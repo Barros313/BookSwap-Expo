@@ -17,8 +17,6 @@ import Register from "./components/authentication/Register";
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
-// SplashScreen.preventAutoHideAsync();
-
 export default function App() {
   const [fontsLoaded, fontError] = useFonts({
     'Kavoon-Regular': require('./assets/fonts/Kavoon-Regular.ttf'),
@@ -122,7 +120,7 @@ export default function App() {
               <Stack.Screen
                   name="Login"
                   component={Login}
-                  initialParams={{ onLoginSuccess: () => setIsAuthenticated(true) }}
+                  initialParams={{ onLoginSuccess: () => setIsAuthenticated(true)}}
               />
               <Stack.Screen name="Register" component={Register} />
             </Stack.Navigator>

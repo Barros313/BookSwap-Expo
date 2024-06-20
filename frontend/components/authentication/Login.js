@@ -5,18 +5,19 @@ import axios from 'axios';
 export default function Login({ route, navigation }) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [user, setUser] = useState(null);
 
     const handleLogin = async () => {
         try {
-            const response = await axios.post("http://192.168.0.151:5000/api/auth/login", {
+            const response = await axios.post(`${process.env.EXPO_PUBLIC_BACKEND_AUTH_CONNECTION}/api/auth/login`, {
                 email, password
             });
-            alert(response.data);
+            alert(response.data.user.id);
 
             route.params.onLoginSuccess();
 
         } catch (error) {
-            alert('Erro ao login');
+            alert(`Erro ao login ${error}`);
         }
     };
 
